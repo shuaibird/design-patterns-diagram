@@ -1,0 +1,19 @@
+@startuml SimpleFactory
+title Simple Factory
+!theme amiga
+
+interface Product
+class ProductA implements Product
+class ProductB implements Product
+
+class Factory {
+  + {static} Product createProduct(type)
+}
+note left of Factory::createProduct
+  type A => ProductA
+  type B => ProductB
+end note
+
+Factory --> Product
+
+@enduml

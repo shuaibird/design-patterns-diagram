@@ -1,0 +1,41 @@
+@startuml AbstractFactory
+title Abstract Factory
+!theme amiga
+
+interface Component1
+class Component1A implements Component1
+class Component1B implements Component1
+
+interface Component2
+class Component2A implements Component2
+class Component2B implements Component2
+
+abstract class FactoryBase {
+  + assemble()
+  # {abstract} Component1 createComponent1()
+  # {abstract} Component2 createComponent2()
+}
+
+note left of FactoryBase::assemble
+  var comp1 = createComponent1()
+  var comp2 = createComponent2()
+end note
+
+class FactoryA extends FactoryBase {
+  # Component1 createComponent1()
+  # Component2 createComponent2()
+}
+
+class FactoryB extends FactoryBase {
+  # Component1 createComponent1()
+  # Component2 createComponent2()
+}
+
+FactoryBase --> Component1
+FactoryBase --> Component2
+FactoryA --> Component1A
+FactoryA --> Component2A
+FactoryB --> Component1B
+FactoryB --> Component2B
+
+@enduml
