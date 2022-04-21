@@ -1,0 +1,41 @@
+@startuml Builder
+title Builder
+!theme amiga
+
+class Product {
+  - required
+  + optionalA
+  + optionalB
+  + constructor(required)
+}
+
+class Builder {
+  - Product product
+  + constructor(required)
+  + Builder setOptionalA(optionalA)
+  + Builder setOptionalB(optionalB)
+  + Product build()
+}
+
+note left of Builder::constructor
+  product = new Product(required)
+end note
+
+note left of Builder::setOptionalA
+  product.optionalA = optionalA
+  return this
+end note
+
+note left of Builder::build
+  return product
+end note
+
+note bottom of Builder
+  var product = new Builder(required)
+      .setOptionalA(optionalA)
+      .setOptionalB(optionalB)
+      .build()
+end note
+
+Builder o-- Product
+@enduml
