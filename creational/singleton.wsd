@@ -1,0 +1,16 @@
+@startuml Singleton
+title Singleton
+!theme amiga
+
+class Singleton {
+  - {static} Singleton instance
+  - constructor()
+  + {static} Singleton getInstance()
+}
+
+note left of Singleton::getInstance
+  if (!instance)
+      instance = new Singleton()
+  return instance
+end note
+@enduml
