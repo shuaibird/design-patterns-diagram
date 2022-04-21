@@ -1,0 +1,23 @@
+@startuml Prototype
+title Prototype
+!theme amiga
+
+interface Prototype {
+  clone()
+}
+
+class Product implements Prototype {
+  + feild
+  + constructor()
+  + constructor(product)
+  + Product clone()
+}
+
+note left of Product::constructor(product)
+  field = product.field
+end note
+
+note left of Product::clone
+  return new Product(this)
+end note
+@enduml
