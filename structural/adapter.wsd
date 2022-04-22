@@ -1,0 +1,20 @@
+@startuml Adapter
+title Adapter
+!theme amiga
+
+class Client {
+  + Z useService(X)
+}
+
+class Adapter {
+  - Service service
+  + Z run(X)
+}
+
+class Service {
+  + Z run(Y)
+}
+
+Client --> Adapter
+Adapter o-- Service
+@enduml
