@@ -1,0 +1,28 @@
+@startuml Bridge
+title Bridge
+!theme amiga
+
+abstract class Abstraction {
+  - Impl impl
+  + constructor(impl)
+  + {abstract} mainProcess()
+  + subProcess()
+}
+
+note left of Abstraction::subProcess
+  impl.process() // bridging
+end note
+
+abstract class Impl {
+  + process()
+}
+
+class RefinedAbstraction extends Abstraction
+class ConcreteImpl extends Impl
+
+note "new RefinedAbstraction(new ConcreteImpl())" as n
+RefinedAbstraction .. n
+n .. ConcreteImpl
+
+Abstraction o-- Impl
+@enduml
