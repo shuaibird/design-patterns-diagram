@@ -1,0 +1,29 @@
+@startuml Composite
+title Composite
+!theme amiga
+
+interface Component {
+  + execute()
+}
+
+note top of Component
+  Tree Structure
+end note
+
+class Leaf implements Component {
+  + execute()
+}
+
+class Container implements Component {
+  - List<Component> comps
+  + add(Component comp)
+  + execute()
+}
+
+note left of Container::execute
+  for comp in comps:
+      comp.execute()
+end note
+
+Container o-- Component
+@enduml
