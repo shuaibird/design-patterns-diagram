@@ -1,5 +1,6 @@
 @startuml Adapter
 title Adapter
+header a.k.a. Wrapper
 !theme amiga
 
 class Client {

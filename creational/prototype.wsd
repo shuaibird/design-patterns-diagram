@@ -1,5 +1,6 @@
 @startuml Prototype
 title Prototype
+header a.k.a. Clone
 !theme amiga
 
 interface Prototype {

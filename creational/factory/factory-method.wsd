@@ -1,5 +1,6 @@
 @startuml FactoryMethod
 title Factory Method
+header a.k.a. Virtual Constructor
 !theme amiga
 
 interface Product

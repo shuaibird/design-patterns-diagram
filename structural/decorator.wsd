@@ -1,5 +1,6 @@
 @startuml Decorator
 title Decorator
+header a.k.a. Wrapper
 !theme amiga
 
 interface Component {

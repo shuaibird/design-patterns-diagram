@@ -1,5 +1,6 @@
 @startuml Composite
 title Composite
+header a.k.a. Object Tree
 !theme amiga
 
 interface Component {
