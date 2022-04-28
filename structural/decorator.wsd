@@ -1,0 +1,32 @@
+@startuml Decorator
+title Decorator
+!theme amiga
+
+interface Component {
+  + execute()
+}
+
+class ConcreteComponent implements Component {
+  + execute()
+}
+
+abstract class BaseDecorator implements Component {
+  - Componet comp
+  + constructor(Component)
+  + execute()
+}
+
+note left of BaseDecorator::execute
+  comp.execute()
+end note
+
+class ConcreteDecorator extends BaseDecorator {
+  + execute()
+  + extra()
+}
+
+note left of ConcreteDecorator::execute
+  super.execute()
+  extra()
+end note
+@enduml
