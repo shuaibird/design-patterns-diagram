@@ -1,0 +1,24 @@
+@startuml Facade
+title Facade
+!theme amiga
+
+class Facade {
+  + {static} process()
+}
+
+class ComponentA {
+  + {static} process()
+}
+
+class ComponentB {
+  + {static} process()
+}
+
+note left of Facade::process
+  ComponentA.process()
+  ComponentB.process()
+end note
+
+Facade -- ComponentA
+Facade -- ComponentB
+@enduml
