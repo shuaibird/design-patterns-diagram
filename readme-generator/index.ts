@@ -1,28 +1,17 @@
 import { join } from "path";
-import { writeFile } from "fs/promises";
-import scan from "./scan";
-import getContents from "./get-contents";
-import getBlocks from "./get-blocks";
-import renderMarkdown from "./render-markdown";
+import MarkdownGenerator from "./markdown-generator";
 
-async function main(root: string, target: string) {
-    const data = await scan(root);
-    const contents = getContents(data);
-    const blocks = await getBlocks(data, root);
-    const blocksMarkdown = (
-        await Promise.all(
-            blocks.map((diagram) => renderMarkdown("block", diagram))
-        )
-    ).join("\n");
-    const markdown = await renderMarkdown("main", {
-        contents,
-        blocks: blocksMarkdown,
+async function main() {
+    const container = join(__dirname, "..");
+    const sourceDir = join(container, "src");
+    const targetFile = join(container, "README.md");
+    const templatesDir = join(__dirname, "templates");
+    const markdownGenerator = new MarkdownGenerator({
+        sourceDir,
+        targetFile,
+        templatesDir,
     });
-    await writeFile(target, markdown);
-    console.log("README.md successfully generated.");
+    await markdownGenerator.run();
 }
 
-(async () => {
-    const container = join(__dirname, "..");
-    await main(join(container, "src"), join(container, "README.md"));
-})();
+main();
