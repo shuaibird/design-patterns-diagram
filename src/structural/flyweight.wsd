@@ -1,0 +1,42 @@
+@startuml Flyweight
+title Flyweight
+header a.k.a. Cache
+!theme amiga
+
+class Context {
+  - uniqueProp
+  - flyweight
+  + constructor(uniqueProp, repeatingProp)
+  + operate()
+}
+
+note left of Context::constructor
+  this.uniqueProp = uniqueProp
+  flyweight = factory.getFlyweight(repeatingProp)
+end note
+
+note left of Context::operate
+  flyweight.operate(uniqueProp)
+end note
+
+class FlyweightFactory {
+  - Hashtable<repeatingProp, Flyweight> cache
+  + getFlyweight(repeatingProp)
+}
+
+note left of FlyweightFactory::getFlyweight
+  if not cache.get(repeatingProp):
+      cache.set(repeatingProp, new Flyweight(repeatingProp))
+  return cache.get(repeatingProp)
+end note
+
+class Flyweight {
+  - repeatingProp
+  + constructor(repeatingProp)
+  + operate(uniqueProp)
+}
+
+Context --> FlyweightFactory
+Context o-- Flyweight
+FlyweightFactory o-- Flyweight
+@enduml

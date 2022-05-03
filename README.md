@@ -33,6 +33,8 @@ A curated list of common OOP design patterns.
 
 	- [Facade](#structural---facade)
 
+	- [Flyweight](#structural---flyweight)
+
 
 ## Patterns
 ### Creational - Builder
@@ -399,6 +401,118 @@ class Facade {
 }
 
 Facade.process();
+
+```
+
+### Structural - Flyweight
+[back to top](#table-of-contents)
+
+![Structural - Flyweight](https://www.plantuml.com/plantuml/svg/VLFBReCm4BpxAxQtH0t-0DH6aI95FVONjcG1gyHEx4LfLFNVQ_Cq8C9jjRCpm-pwu1WjrvSAJjNZJgeeMR3YYgAw93oJ1PJV4YKSCIj9l7195mAyg0A5o2fq3ev6C_qm_0g016gjRZLzMdDjodoW0tY5p6Z7jixOsCq8t86bAo4hNOHosq3DbImoRRRYJmXjcA2YdC7alLwQHcn-X4lbv4WAxrChWn7Vo37CF6H1FFpkPkQ1z1c2x9fuvozcbhtdKJZcQTCQ14-jYIws3tGburT5RnCVkn6_XwnPGGZdcV5vN7F1D8sdFPtAWy6MFKGo8qmz97njtytxEz1qXpKtOPUMkBPwbNyzeIwQ2NnnHazE9rw3JwM_qoJPBq8PcYP9eYUmMDQqVV3M_HiI_m00)
+
+```typescript
+class Forest {
+    #trees: Tree[];
+    #factory = new TreeTypeFactory();
+
+    plantTree({
+        x,
+        y,
+        name,
+        color,
+        texture,
+    }: {
+        x: number;
+        y: number;
+        name: string;
+        color: string;
+        texture: string;
+    }): void {
+        this.#trees.push(
+            new Tree(this.#factory, { x, y, name, color, texture })
+        );
+    }
+}
+
+class Tree {
+    public x: number;
+    public y: number;
+    public type: TreeType;
+
+    public constructor(
+        factory: TreeTypeFactory,
+        {
+            x,
+            y,
+            name,
+            color,
+            texture,
+        }: {
+            x: number;
+            y: number;
+            name: string;
+            color: string;
+            texture: string;
+        }
+    ) {
+        this.x = x;
+        this.y = y;
+        // instead of directly constructing a new treeType
+        // fetch the treeType from factory
+        // to save memory usage
+        this.type = factory.getTreeType({ name, color, texture });
+    }
+}
+
+class TreeTypeFactory {
+    #cache: Record<string, TreeType>;
+    public getTreeType({
+        name,
+        color,
+        texture,
+    }: {
+        name: string;
+        color: string;
+        texture: string;
+    }): TreeType {
+        const key = this.hashKey({ name, color, texture });
+        if (!this.#cache[key]) {
+            this.#cache[key] = new TreeType({ name, color, texture });
+        }
+        return this.#cache[key];
+    }
+
+    private hashKey({
+        name,
+        color,
+        texture,
+    }: {
+        name: string;
+        color: string;
+        texture: string;
+    }): string {
+        return `${name}-${color}-${texture}`;
+    }
+}
+
+class TreeType {
+    #name: string;
+    #color: string;
+    #texture: string;
+
+    public constructor({
+        name,
+        color,
+        texture,
+    }: {
+        name: string;
+        color: string;
+        texture: string;
+    }) {
+        this.#name = name;
+        this.#color = color;
+        this.#texture = texture;
+    }
+}
 
 ```
 
