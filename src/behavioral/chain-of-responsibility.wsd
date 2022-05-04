@@ -1,0 +1,24 @@
+@startuml ChainOfResponsibility
+title ChainOfResponsibility
+header a.k.a. CoR / Chain of Command
+!theme amiga
+
+abstract class Handler {
+  # Handler next
+  + setNext(next)
+  + {abstract} run()
+}
+
+note left of Handler::run
+  if !done:
+      next.run()
+end note
+
+class HandlerA extends Handler {
+  + run()
+}
+
+class HandlerB extends Handler {
+  + run()
+}
+@enduml

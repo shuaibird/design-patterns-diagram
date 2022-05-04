@@ -13,6 +13,10 @@ Creational patterns provide various object creation mechanisms, which increase f
 Structural patterns explain how to assemble objects and classes into larger structures, while keeping this structures flexible and efficient.
 
 ## Table of Contents
+- Behavioral
+
+	- [Chain Of Responsibility](#behavioral---chain-of-responsibility)
+
 - Creational
 
 	- [Builder](#creational---builder)
@@ -47,6 +51,52 @@ Structural patterns explain how to assemble objects and classes into larger stru
 
 
 ## Patterns
+### Behavioral - Chain Of Responsibility
+[back to top](#table-of-contents)
+
+![Behavioral - Chain Of Responsibility](https://www.plantuml.com/plantuml/svg/XL2x2i9G3Dtp5H6N5g7kdTGkJWh-GRIflNWVqfk28lwxkTO77SHCoNabP165EkcTnQebuxVDZkCv-6ZsnXgvWXYn_8DhcMhka8fJGGLMOOVpGOcXqT4vyZLCf6N7ICuS2O3sKJew21uinOXhLLYDk07Yz3DvleW2Cumi6-sp1EHFvFOEk6FN-oo7Eu0FmcYvaRJsbL6MIgl3D3YfW-TI-rGfgHYSx6jCLe3HBKjKYNBZusRVTIFrwezwePm-5nu0)
+
+```typescript
+abstract class Middleware {
+    protected next: Middleware | null = null;
+
+    public setNext(next: Middleware): void {
+        this.next = next;
+    }
+
+    public abstract run(request: Record<string, boolean>): void;
+}
+
+class Authentication extends Middleware {
+    public run(request: Record<string, boolean>): void {
+        if (request.isAuthenticated) {
+            this.next && this.next.run(request);
+            return;
+        }
+        console.log(401);
+    }
+}
+
+class Authorization extends Middleware {
+    public run(request: Record<string, boolean>): void {
+        if (request.isAdmin) {
+            this.next && this.next.run(request);
+            return;
+        }
+        console.log(403);
+    }
+}
+
+const authentication = new Authentication();
+const authorization = new Authorization();
+authentication.setNext(authorization);
+
+// middlewares stack
+const middlewares = authentication;
+middlewares.run({ isAuthenticated: true, isAdmin: false }); // 403
+
+```
+
 ### Creational - Builder
 [back to top](#table-of-contents)
 
