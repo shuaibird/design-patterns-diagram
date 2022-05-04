@@ -35,6 +35,8 @@ A curated list of common OOP design patterns.
 
 	- [Flyweight](#structural---flyweight)
 
+	- [Proxy](#structural---proxy)
+
 
 ## Patterns
 ### Creational - Builder
@@ -513,6 +515,41 @@ class TreeType {
         this.#texture = texture;
     }
 }
+
+```
+
+### Structural - Proxy
+[back to top](#table-of-contents)
+
+![Structural - Proxy](https://www.plantuml.com/plantuml/svg/bP112i9034NtEKNSjTXUGRfr9uW72DEq3KndIYQALRoxqjekH11N2Vdv_uLKoKZjt7iyQBoEO6AUttt7LBFYAN6DJLHqv3e9RO6URYDA41FoSYEJ60faSx2nZdj6wgKb00d6sf1ZFB9UnF5-7Tm1SOjnO9tSMGuF0ESffMKNfH_yAonO-ii-dVxJNAwODDSfqCMGJC_EecOVUlwDEBDYMUwMEAWurAzlmXC0)
+
+```typescript
+interface IDownloader {
+    download(query: string): string;
+}
+
+class Downloader implements IDownloader {
+    public download(query: string): string {
+        return query;
+    }
+}
+
+class DownloaderProxy implements IDownloader {
+    #downloader: Downloader;
+    #cache: Record<string, string>;
+
+    public constructor(downloader: Downloader) {
+        this.#downloader = downloader;
+    }
+    public download(query: string): string {
+        if (!this.#cache[query]) {
+            this.#cache[query] = this.#downloader.download(query);
+        }
+        return this.#cache[query];
+    }
+}
+
+const downloaderWithCache = new DownloaderProxy(new Downloader());
 
 ```
 

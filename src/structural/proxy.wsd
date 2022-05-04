@@ -1,0 +1,21 @@
+@startuml Proxy
+title Proxy
+header Used for caching, lazy initialization, etc
+!theme amiga
+
+interface ServiceInterface {
+  + operation()
+}
+
+class Service implements ServiceInterface {
+  + operation()
+}
+
+class Proxy implements ServiceInterface {
+  - Service service
+  + constructor(Service service)
+  + operation()
+}
+
+Proxy o--> Service
+@enduml
