@@ -21,6 +21,8 @@ Structural patterns explain how to assemble objects and classes into larger stru
 
 	- [Iterator](#behavioral---iterator)
 
+	- [Mediator](#behavioral---mediator)
+
 - Creational
 
 	- [Builder](#creational---builder)
@@ -156,6 +158,36 @@ class ConcreteIterator<T> implements IIterator<T> {
 class ConcreteIterable<T> implements IIterable<T> {
     public iterator(): IIterator<T> {
         return new ConcreteIterator();
+    }
+}
+
+```
+
+### Behavioral - Mediator
+[back to top](#table-of-contents)
+
+![Behavioral - Mediator](https://www.plantuml.com/plantuml/svg/ZP6zRiCm38HtFWMBBZOCktk68a2d3da8LgPheVenA0Pe4EJTAnjHXSPBH-9ETn_5Or8IFNk79nujQHHGguxhE3EDB4Z3rq03lWTbyQic5tp1jnXKedCiyAGpUqRozfC0w2Efa54qZbBAFh_4m47n2eZFw4iwOeScXcm-cpmtHMWtvLfYRXWN5b9kMhW1s9LY8bCnjzmEGrGxNHfJwZPtGGX6MBcYyBTo61_XkhzLEP7HyQGOftt6uN0tvuS5VRX3w6nJ2xbXfU97Z5zmwnUNFove-jSo5RRlN-kLzjl5lj-LmJ7Zv6F33m00)
+
+```typescript
+interface Mediator {
+    notify(component: Component): void;
+}
+
+abstract class Component {
+    protected mediator: Mediator;
+    constructor(mediator: Mediator) {
+        this.mediator = mediator;
+    }
+    public abstract operate(): void;
+}
+
+class ConcreteMediator implements Mediator {
+    public notify(component: Component): void {}
+}
+
+class ConcreteComponent extends Component {
+    public operate(): void {
+        this.mediator.notify(this);
     }
 }
 

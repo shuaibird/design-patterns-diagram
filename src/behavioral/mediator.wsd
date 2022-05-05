@@ -1,0 +1,30 @@
+@startuml Mediator
+title Mediator
+header a.k.a. Intermediary / Controller
+!theme amiga
+
+abstract class Component {
+  # mediator
+  + constructor(mediator)
+  + {abstract} operate()
+}
+
+interface Mediator {
+  + notify(component)
+}
+
+class ConcreteComponent extends Component {
+  + operate()
+}
+
+note left of ConcreteComponent::operate
+  mediator.notify(this)
+end note
+
+class ConcreteMediator implements Mediator {
+  + notify(component)
+}
+
+Component --> Mediator
+ConcreteComponent o-- ConcreteMediator
+@enduml
