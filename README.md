@@ -17,6 +17,8 @@ Structural patterns explain how to assemble objects and classes into larger stru
 
 	- [Chain Of Responsibility](#behavioral---chain-of-responsibility)
 
+	- [Command](#behavioral---command)
+
 - Creational
 
 	- [Builder](#creational---builder)
@@ -94,6 +96,38 @@ authentication.setNext(authorization);
 // middlewares stack
 const middlewares = authentication;
 middlewares.run({ isAuthenticated: true, isAdmin: false }); // 403
+
+```
+
+### Behavioral - Command
+[back to top](#table-of-contents)
+
+![Behavioral - Command](https://www.plantuml.com/plantuml/svg/PL5BJWCn3Dtx56RN2f83T86Ak07b0bRgeH69Wn8FGaBS7TEP3ErqbTXvlzZxfbHrp0cVIyuaHz2eYPVgn7JaYkJVFNby2XgBFE1h9MbqBk1EJvmPASSt0eYYN0SAYm9-0-8zyXU7KNcpXH-0aAWr0qYehDo1CNyaKn9jLro7bGF7JwvdeL2aQHs3bhhf3zjR2odAc7XGBCFQQRUReKRh4hx8otGrFflrdq1FUh263U7w9prZcCvRrubrQJP3_N_IjTESeNjTXZBvEOTpZyj-raCipYqYi3UyhHP-0G00)
+
+```typescript
+interface Command {
+    execute(): void;
+}
+
+class ConcreteCommand implements Command {
+    #receiver: Receiver;
+    constructor(receiver: Receiver) {
+        this.#receiver = receiver;
+    }
+    public execute(): void {
+        this.#receiver.onReceive();
+    }
+}
+
+class Sender {
+    public execute(command: Command): void {
+        command.execute();
+    }
+}
+
+class Receiver {
+    public onReceive(): void {}
+}
 
 ```
 

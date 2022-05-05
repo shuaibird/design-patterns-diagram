@@ -1,0 +1,34 @@
+@startuml Command
+title Command
+header a.k.a. Action, Transaction
+!theme amiga
+
+interface Command {
+  + execute()
+}
+
+class ConcreteCommand implements Command {
+  - receiver
+  + constructor(receiver)
+  + execute()
+}
+
+note left of ConcreteCommand::execute
+  receiver.onReceive()
+end note
+
+class Sender {
+  + execute(Command command)
+}
+
+note left of Sender::execute
+  command.execute()
+end note
+
+class Receiver {
+  + onReceive()
+}
+
+Sender --> Command
+ConcreteCommand o-- Receiver
+@enduml
