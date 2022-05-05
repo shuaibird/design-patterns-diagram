@@ -1,0 +1,25 @@
+@startuml Iterator
+title Iterator
+!theme amiga
+
+interface Iterator {
+  + next()
+  + hasNext(): bool
+}
+
+interface Iterable {
+  +  Iterator iterator()
+}
+
+class ConcreteIterator implements Iterator {
+  + next()
+  + hasNext(): bool
+}
+
+class ConcreteIterable implements Iterable {
+  +  Iterator iterator()
+}
+
+Iterable --> Iterator
+ConcreteIterable --> ConcreteIterator
+@enduml

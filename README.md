@@ -19,6 +19,8 @@ Structural patterns explain how to assemble objects and classes into larger stru
 
 	- [Command](#behavioral---command)
 
+	- [Iterator](#behavioral---iterator)
+
 - Creational
 
 	- [Builder](#creational---builder)
@@ -127,6 +129,34 @@ class Sender {
 
 class Receiver {
     public onReceive(): void {}
+}
+
+```
+
+### Behavioral - Iterator
+[back to top](#table-of-contents)
+
+![Behavioral - Iterator](https://www.plantuml.com/plantuml/svg/bP1D2W8n38NtEKNSAJ8NS243hjnuXqoDJY5jfOqWY7StCug56K7SvUUzBu-qHIdhDGZkbJDfog1UXMkxq9u38mL_9W0VRNuYLmLu1yGrHhxfSZMMFPN3s6smIqdWCRDrTk1bgnZ_BWnY1YTK2kvIT9cLgoXSnD94BV_T_u8RCannltDzP4sphJ-QWOVjD3oq78_sQNW2)
+
+```typescript
+interface IIterator<T> {
+    next(): T;
+    hasNext(): boolean;
+}
+
+interface IIterable<T> {
+    iterator(): IIterator<T>;
+}
+
+class ConcreteIterator<T> implements IIterator<T> {
+    next(): T {}
+    hasNext(): boolean {}
+}
+
+class ConcreteIterable<T> implements IIterable<T> {
+    public iterator(): IIterator<T> {
+        return new ConcreteIterator();
+    }
 }
 
 ```
